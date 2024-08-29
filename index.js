@@ -84,7 +84,11 @@ const port = 8080;
 const MAX_RETRIES = 3;
 
 async function scrapeRoomDetails(url, retries = 0) {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ 
+        args:[
+            '--no-sandbox',
+        ]
+     });
     const page = await browser.newPage();
 
     try {
@@ -166,7 +170,11 @@ app.get('/Hampton-Inn-Bowling-Green', async (req, res) => {
         return res.status(400).send('Please provide checkinDate and checkoutDate');
     }
 
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ 
+        args:[
+            '--no-sandbox',
+        ]
+     });
     const page = await browser.newPage();
 
 
@@ -230,7 +238,11 @@ app.get('/Hilton-Garden-Inn-Bowling-Green', async (req, res) => {
         return res.status(400).send('Please provide checkinDate and checkoutDate');
     }
 
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ 
+        args:[
+            '--no-sandbox',
+        ]
+     });
     const page = await browser.newPage();
 
 
@@ -294,7 +306,11 @@ app.get('/Hilton-Garden-Inn-Bowling-Green', async (req, res) => {
         return res.status(400).send('Please provide checkinDate and checkoutDate');
     }
 
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ 
+        args:[
+            '--no-sandbox',
+        ]
+     });
     const page = await browser.newPage();
 
 
@@ -358,7 +374,11 @@ app.get('/Embassy-Suites-by-Hilton-Bowling-Green', async (req, res) => {
         return res.status(400).send('Please provide checkinDate and checkoutDate');
     }
 
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ 
+        args:[
+            '--no-sandbox',
+        ]
+     });
     const page = await browser.newPage();
     // let url = 'https://www.hilton.com/en/book/reservation/rooms/?ctyhocn=BWGLLES&arrivalDate='+checkinDate+'&departureDate='+checkoutDate+'&room1NumAdults=1'; // Replace with your URL
 
@@ -430,7 +450,11 @@ app.get('/Holiday-Inn-University-Plaza-Bowling-Green', async (req, res) => {
         return res.status(400).send('Please provide checkinDate and checkoutDate');
     }
 
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ 
+        args:[
+            '--no-sandbox',
+        ]
+     });
     const page = await browser.newPage();
 
     try {
