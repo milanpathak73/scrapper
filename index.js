@@ -86,7 +86,7 @@ const MAX_RETRIES = 3;
 async function scrapeRoomDetails(url, retries = 0) {
     const browser = await puppeteer.launch({
         executablePath: '/usr/bin/google-chrome',
-        headless: true,
+        headless: false,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
@@ -141,7 +141,7 @@ app.get('/check-puppeteer', async (req, res) => {
         // Launch Puppeteer
         const browser = await puppeteer.launch({
             executablePath: '/usr/bin/google-chrome',
-            headless: true,
+            headless: false,
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
 
@@ -189,7 +189,7 @@ app.get('/Hampton-Inn-Bowling-Green', async (req, res) => {
 
     const browser = await puppeteer.launch({
         executablePath: '/usr/bin/google-chrome',
-        headless: true,
+        headless: false,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
@@ -257,7 +257,7 @@ app.get('/Hilton-Garden-Inn-Bowling-Green', async (req, res) => {
 
     const browser = await puppeteer.launch({
         executablePath: '/usr/bin/google-chrome',
-        headless: true,
+        headless: false,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
@@ -325,7 +325,7 @@ app.get('/Hilton-Garden-Inn-Bowling-Green', async (req, res) => {
 
     const browser = await puppeteer.launch({
         executablePath: '/usr/bin/google-chrome',
-        headless: true,
+        headless: false,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
@@ -393,7 +393,7 @@ app.get('/Embassy-Suites-by-Hilton-Bowling-Green', async (req, res) => {
 
     const browser = await puppeteer.launch({
         executablePath: '/usr/bin/google-chrome',
-        headless: true,
+        headless: false,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
@@ -469,7 +469,7 @@ app.get('/Holiday-Inn-University-Plaza-Bowling-Green', async (req, res) => {
 
     const browser = await puppeteer.launch({
         executablePath: '/usr/bin/google-chrome',
-        headless: true,
+        headless: false,
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
