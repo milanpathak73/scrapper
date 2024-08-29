@@ -140,8 +140,9 @@ app.get('/check-puppeteer', async (req, res) => {
     try {
         // Launch Puppeteer
         const browser = await puppeteer.launch({
-            headless: true, // Ensure headless mode is enabled
-            args: ['--no-sandbox', '--disable-setuid-sandbox'], // Required for some environments
+            executablePath: '/usr/bin/google-chrome',
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
 
         // Close the browser
