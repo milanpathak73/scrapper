@@ -139,8 +139,11 @@ async function scrapeRoomDetails(url, retries = 0) {
 app.get('/check-puppeteer', async (req, res) => {
     try {
         // Launch Puppeteer
-        const browser = await puppeteer.launch({ headless: true });
-        
+        const browser = await puppeteer.launch({
+            headless: true, // Ensure headless mode is enabled
+            args: ['--no-sandbox', '--disable-setuid-sandbox'], // Required for some environments
+        });
+
         // Close the browser
         await browser.close();
 
