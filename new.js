@@ -1,11 +1,20 @@
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
+const chromium = require('chrome-aws-lambda');
 
 (async () => {
-    // Launch the browser
-    const browser = await puppeteer.launch({ headless: false });
-    const page = await browser.newPage();
+    let browser = null;
 
     try {
+        // Launch the browser
+        browser = await puppeteer.launch({
+            args: chromium.args,
+            defaultViewport: chromium.defaultViewport,
+            executablePath: await chromium.executablePath,
+            headless: true // Set to true to run in headless mode
+        });
+
+        const page = await browser.newPage();
+
         // Go to the initial URL
         await page.goto('https://www.druryhotels.com/bookandstay/newreservation/0066?bookItFastArrivalDate=2024-09-04&bookItFastDepartureDate=2024-09-05', { waitUntil: 'networkidle2', timeout: 0 });
 
@@ -23,7 +32,7 @@ const puppeteer = require('puppeteer');
         const roomDetails = await page.evaluate(() => {
             const roomCards = document.querySelectorAll('.choose-rate-and-room-card');
             if (roomCards.length === 0) {
-                throw new Error("no rooms are available");
+                throw new Error("No rooms are available");
             }
 
             const rooms = [];
@@ -45,6 +54,8 @@ const puppeteer = require('puppeteer');
         console.error("Error: " + error.message);
     } finally {
         // Close the browser
-        await browser.close();
+        if (browser) {
+            await browser.close();
+        }
     }
 })();
