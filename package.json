@@ -2,7 +2,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "googleapis": "^142.0.0",
-    "puppeteer": "^23.1.1"
+    "puppeteer": "^23.2.1"
   },
   "scripts": {
     "start": "node index.js"

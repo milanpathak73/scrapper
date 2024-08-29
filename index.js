@@ -136,7 +136,20 @@ async function scrapeRoomDetails(url, retries = 0) {
     }
 }
 
+app.get('/check-puppeteer', async (req, res) => {
+    try {
+        // Launch Puppeteer
+        const browser = await puppeteer.launch({ headless: true });
+        
+        // Close the browser
+        await browser.close();
 
+        res.status(200).send('Puppeteer is installed and functional.');
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).send('Puppeteer is not installed or not functional.');
+    }
+});
 
 
 app.get('/Drury-Inn-Suites-Bowling-Green', async (req, res) => {
