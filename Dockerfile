@@ -10,12 +10,14 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
+RUN npm install puppeteer@latest
+
+RUN npx puppeteer browsers install chrome
 
 # Copy the rest of the application code into the container
 COPY . .
 
 # Install Puppeteer and download its version of Chrome
-RUN npm install puppeteer@latest
 
 # Expose port 8080
 EXPOSE 8080
