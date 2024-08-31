@@ -87,7 +87,7 @@ async function scrapeRoomDetails(url, retries = 0) {
     const browser = await puppeteer.launch({
         executablePath: '/usr/bin/google-chrome',
         headless: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+         args: ['--no-sandbox', '--disable-setuid-sandbox', `--display=${process.env.DISPLAY || ':99'}`],
     });
     const page = await browser.newPage();
 
@@ -139,10 +139,11 @@ async function scrapeRoomDetails(url, retries = 0) {
 app.get('/check-puppeteer', async (req, res) => {
     try {
         // Launch Puppeteer
+        console.log("hi")
         const browser = await puppeteer.launch({
             executablePath: '/usr/bin/google-chrome',
             headless: false,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+             args: ['--no-sandbox', '--disable-setuid-sandbox', `--display=${process.env.DISPLAY || ':99'}`],
         });
 
         // Close the browser
@@ -190,7 +191,7 @@ app.get('/Hampton-Inn-Bowling-Green', async (req, res) => {
     const browser = await puppeteer.launch({
         executablePath: '/usr/bin/google-chrome',
         headless: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+         args: ['--no-sandbox', '--disable-setuid-sandbox', `--display=${process.env.DISPLAY || ':99'}`],
     });
     const page = await browser.newPage();
 
@@ -258,7 +259,7 @@ app.get('/Hilton-Garden-Inn-Bowling-Green', async (req, res) => {
     const browser = await puppeteer.launch({
         executablePath: '/usr/bin/google-chrome',
         headless: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+         args: ['--no-sandbox', '--disable-setuid-sandbox', `--display=${process.env.DISPLAY || ':99'}`],
     });
     const page = await browser.newPage();
 
@@ -326,7 +327,7 @@ app.get('/Hilton-Garden-Inn-Bowling-Green', async (req, res) => {
     const browser = await puppeteer.launch({
         executablePath: '/usr/bin/google-chrome',
         headless: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+         args: ['--no-sandbox', '--disable-setuid-sandbox', `--display=${process.env.DISPLAY || ':99'}`],
     });
     const page = await browser.newPage();
 
@@ -394,7 +395,7 @@ app.get('/Embassy-Suites-by-Hilton-Bowling-Green', async (req, res) => {
     const browser = await puppeteer.launch({
         executablePath: '/usr/bin/google-chrome',
         headless: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+         args: ['--no-sandbox', '--disable-setuid-sandbox', `--display=${process.env.DISPLAY || ':99'}`],
     });
     const page = await browser.newPage();
     // let url = 'https://www.hilton.com/en/book/reservation/rooms/?ctyhocn=BWGLLES&arrivalDate='+checkinDate+'&departureDate='+checkoutDate+'&room1NumAdults=1'; // Replace with your URL
@@ -455,27 +456,7 @@ app.get('/Embassy-Suites-by-Hilton-Bowling-Green', async (req, res) => {
 // });
 
 
-function subtractOneMonth(dateString) {
-    // Extract month and year from the string
-    let month = parseInt(dateString.substring(0, 2), 10);
-    let year = parseInt(dateString.substring(2), 10);
 
-    // Create a date object from the extracted month and year
-    let date = new Date(year, month - 1); // JavaScript months are 0-based
-
-    // Subtract one month
-    date.setMonth(date.getMonth() - 1);
-
-    // Extract the new month and year
-    let newMonth = date.getMonth() + 1; // Months are 0-based
-    let newYear = date.getFullYear();
-
-    // Format month and year to "MMYYYY"
-    let formattedMonth = newMonth < 10 ? '0' + newMonth : newMonth;
-    let formattedYear = newYear;
-
-    return formattedMonth + formattedYear;
-}
 
 
 
@@ -488,49 +469,27 @@ app.get('/Holiday-Inn-University-Plaza-Bowling-Green', async (req, res) => {
     }
 
     const browser = await puppeteer.launch({
-        // executablePath: '/usr/bin/google-chrome',
+        executablePath: '/usr/bin/google-chrome',
         headless: false,
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+         args: ['--no-sandbox', '--disable-setuid-sandbox', `--display=${process.env.DISPLAY || ':99'}`],
     });
     const page = await browser.newPage();
 
     try {
         // Create a URL object
-        let cid = checkinDate.substring(0, 2);
+        var url = "https://www.ihg.com/holidayinn/hotels/us/en/find-hotels/select-roomrate?qDest=Holiday%20Inn%20University%20Plaza-Bowling%20Green&qPt=CASH&qCiD=28&qCoD=29&qCiMy=082024&qCoMy=082024&qAdlt=1&qChld=0&qRms=1&qAAR=6CBARC&qSlH=BWGWT&qAkamaiCC=IN&srb_u=1&qExpndSrch=false&qSrt=sBR&qBrs=6c.hi.ex.sb.ul.ic.cp.cw.in.vn.cv.rs.ki.ki.ma.sp.va.sp.re.vx.nd.sx.we.lx.rn.sn.sn.sn.sn.sn.nu&qWch=0&qSmP=0&qRad=30&qRdU=mi&setPMCookies=false&qpMbw=0&qErm=false&qpMn=0&qLoSe=false&qChAge=&qRmFltr=";
+        let urlObj = new URL(url);
 
-        if (cid.charAt(0) === '0') {
-            // Remove the first character by slicing from index 1
-            cid = cid.slice(1);
-        }
+        // Set the new query parameters
+        urlObj.searchParams.set('qCiD', checkinDate.substring(0, 2));
+        urlObj.searchParams.set('qCiMy', checkinDate.substring(2));
+        urlObj.searchParams.set('qCoD', checkoutDate.substring(0, 2));
+        urlObj.searchParams.set('qCoMy', checkoutDate.substring(2));
 
-        let c0d = checkoutDate.substring(0, 2);
+        // Get the updated URL
+        let updatedUrl = urlObj.toString();
 
-        if (c0d.charAt(0) === '0') {
-            // Remove the first character by slicing from index 1
-            c0d = c0d.slice(1);
-        }
-
-
-        
-        let cim = subtractOneMonth(checkinDate.substring(2));
-        let com = subtractOneMonth(checkinDate.substring(2));
-
-
-        var url = "https://www.ihg.com/holidayinn/hotels/us/en/find-hotels/select-roomrate?qDest=Holiday%20Inn%20University%20Plaza-Bowling%20Green&qPt=CASH&qCiD="+cid+"&qCoD="+c0d+"&qCiMy="+cim+"&qCoMy="+com+"&qAdlt=1&qChld=0&qRms=1&qAAR=6CBARC&qSlH=BWGWT&qAkamaiCC=IN&srb_u=1&qExpndSrch=false&qSrt=sBR&qBrs=6c.hi.ex.sb.ul.ic.cp.cw.in.vn.cv.rs.ki.ki.ma.sp.va.sp.re.vx.nd.sx.we.lx.rn.sn.sn.sn.sn.sn.nu&qWch=0&qSmP=0&qRad=30&qRdU=mi&setPMCookies=false&qpMbw=0&qErm=false&qpMn=0&qLoSe=false&qChAge=&qRmFltr=";
-        // let urlObj = new URL(url);
-
-        // // Set the new query parameters
-        // urlObj.searchParams.set('qCiD', checkinDate.substring(0, 2));
-        // urlObj.searchParams.set('qCiMy', checkinDate.substring(2));
-        // urlObj.searchParams.set('qCoD', checkoutDate.substring(0, 2));
-        // urlObj.searchParams.set('qCoMy', checkoutDate.substring(2));
-
-        // // Get the updated URL
-        // let updatedUrl = urlObj.toString();
-
-        // console.log(updatedUrl);
-
-        await page.goto(url, { waitUntil: 'networkidle2', timeout: 0 });
+        await page.goto(updatedUrl, { waitUntil: 'networkidle2', timeout: 0 });
 
         // Increase the timeout for waiting for the selector
         await page.waitForSelector('.roomName', { timeout: 30000 }); // 30 seconds timeout
@@ -569,6 +528,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Server is running on http://0.0.0.0:${port}`);
 });
